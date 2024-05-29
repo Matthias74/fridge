@@ -5,7 +5,7 @@ ruby "3.0.0"
 
 gem "rails", "~> 7.0.4"
 gem "sprockets-rails"
-gem "sqlite3", "~> 1.4"
+gem "mysql2", "~> 0.5"
 gem "puma", "~> 5.0"
 gem "vite_rails"
 gem "jbuilder"
