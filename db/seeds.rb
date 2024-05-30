@@ -15,29 +15,8 @@ def has_invalid_ingredients?(ingredients)
   ingredients.pluck(:name).detect { |n| n.length > varchar_max_length }
 end
 
-File.readlines("#{Rails.root}/tmp/recipes.json").each do |line|
-  begin
-    recipe_data = JSON.parse(line)
-
-    recipe[:ingredients_attributes] = recipe_data["ingredients"].map do |ingredient|
-      ingredient_attributes(ingredient)
-    end
-
-    next if has_invalid_ingredients?(recipe[:ingredients_attributes])
-
-    valid_recipe_datas << recipe_data
-  rescue JSON::ParserError
-    next
-  end
-end
-
-recipes = []
-ingredients = valid_recipe_datas.pluck(:ingredients_attributes).flatten.uniq.map do |ingredient_data|
-  Ingredient.new(ingredient_data)
-end
-
-valid_recipe_datas.each do |recipe_data|
-  recipes << Recipe.new({
+def recipe_attributes(recipe_data)
+  {
     rate: recipe_data["rate"]&.to_i,
     author_tip: recipe_data["author_tip"],
     budget: recipe_data["budget"],
@@ -48,5 +27,44 @@ valid_recipe_datas.each do |recipe_data|
     cook_time: recipe_data["cook_time"],
     total_time: recipe_data["total_time"],
     nb_comments: recipe_data["nb_comments"],
-  })
+  }
+end
+
+File.readlines("#{Rails.root}/tmp/recipes.json").each do |line|
+  begin
+    recipe_data = JSON.parse(line)
+
+    recipe_data[:ingredients_attributes] = recipe_data["ingredients"].map do |ingredient|
+      ingredient_attributes(ingredient)
+    end
+
+    next if has_invalid_ingredients?(recipe_data[:ingredients_attributes])
+
+    valid_recipe_datas << recipe_data
+  rescue JSON::ParserError
+    next
+  end
+end
+
+ingredients = valid_recipe_datas.pluck(:ingredients_attributes).flatten.uniq.map do |ingredient_data|
+  Ingredient.new(ingredient_data)
+end
+
+recipes = valid_recipe_datas.map do |recipe_data|
+  Recipe.new(recipe_attributes(recipe_data))
+end
+
+Recipe.import recipes
+Ingredient.import ingredients
+
+valid_recipe_datas.each do |recipe_data|
+  recipe = Recipe.find_by(recipe_attributes(recipe_data))
+  next unless recipe
+
+  recipe_data[:ingredients_attributes].each do |ingredient_data|
+    ingredient = Ingredient.find_by(ingredient_data)
+    next unless ingredient
+
+    recipe.ingredients << ingredient
+  end
 end
