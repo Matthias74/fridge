@@ -1,10 +1,10 @@
 import { createWebHistory, createRouter } from 'vue-router'
-import Hello from '@/views/hello.vue'
+import Recipes from '@/views/recipes.vue'
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-  	{ path: '/', component: Hello, name: "root_path" }
+  	{ path: '/', component: Recipes, name: "root_path" }
   ]
 });
 
