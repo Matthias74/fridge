@@ -13,6 +13,8 @@ gem "redis", "~> 4.0"
 gem 'bootstrap', '~> 5.2.0'
 gem "activerecord-import"
 gem 'will_paginate', '~> 4.0'
+gem "sidekiq"
+gem "sidekiq-cron"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
