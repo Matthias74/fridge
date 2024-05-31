@@ -30,7 +30,7 @@ def recipe_attributes(recipe_data)
   }
 end
 
-File.readlines("#{Rails.root}/tmp/recipes.json").each do |line|
+File.readlines("#{Rails.root}/db/data/recipes.json").each do |line|
   begin
     recipe_data = JSON.parse(line)
 
