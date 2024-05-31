@@ -13,15 +13,13 @@ default: &default
   adapter: mysql2
   encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username:
+  username: root
   password:
-  host: 127.0.0.1
+  host: localhost
 
 development:
   <<: *default
   database: fridge_development
-  password: password
-  host: 127.0.0.1
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -55,4 +53,3 @@ production:
   database: fridge_production
   username: fridge
   password: <%= ENV["FRIDGE_DATABASE_PASSWORD"] %>
-  host: localhost
