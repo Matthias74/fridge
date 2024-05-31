@@ -5,4 +5,10 @@ Rails.application.routes.draw do
   # root "articles#index"
   get "welcome/index"
   root to: "welcome#index"
+
+  defaults format: :json do
+    namespace :api do
+      resources :recipes, only: [:index]
+    end
+  end
 end

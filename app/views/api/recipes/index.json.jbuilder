@@ -1,6 +1,6 @@
 json.pagination do
-  json.current_page @campaigns.current_page
-  json.total_pages  @campaigns.total_pages
+  json.current_page @recipes.current_page
+  json.total_pages  @recipes.total_pages
 end
 
 json.recipes @recipes do |recipe|

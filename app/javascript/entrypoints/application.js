@@ -28,6 +28,8 @@ console.log('Visit the guide for more information: ', 'https://vite-ruby.netlify
 // import '~/index.css'
 import { createApp } from 'vue/dist/vue.esm-bundler';
 import Router from "@/routes.js"
+import * as bootstrap from 'bootstrap';
+window.bootstrap = bootstrap;
 
 const app = createApp({
 	template: "<div><router-view/></div>"

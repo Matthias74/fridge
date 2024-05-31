@@ -7,9 +7,9 @@ class Api::RecipesController < ApplicationController
 
   def recipes
     @recipes = if params[:ingredients].present?
-      Recipe.by_ingredients(params[:ingredients]).paginate(params[:page]|| 1)
+      Recipe.by_ingredients(params[:ingredients]).paginate(page: params[:page] || 1)
     else
-      Recipe.includes(:ingredients).paginate(params[:page]|| 1)
+      Recipe.includes(:ingredients).paginate(page: params[:page] || 1)
     end
   end
 end
