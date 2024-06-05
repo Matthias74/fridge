@@ -96,6 +96,8 @@ GEM
     debug (1.7.0)
       irb (>= 1.5.0)
       reline (>= 0.3.1)
+    dockerfile-rails (1.6.14)
+      rails (>= 3.0.0)
     dry-cli (0.7.0)
     erubi (1.11.0)
     et-orbi (1.2.11)
@@ -259,6 +261,7 @@ DEPENDENCIES
   bootstrap (~> 5.2.0)
   capybara
   debug
+  dockerfile-rails (>= 1.6)
   jbuilder
   mysql2 (~> 0.5)
   pry
