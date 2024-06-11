@@ -1,28 +1,28 @@
 version: '2'
 services:
     db:
-        image: mysql:5.7
+        image: mysql:8.0
+        command: --default-authentication-plugin=mysql_native_password
         restart: always
         environment:
             MYSQL_ROOT_PASSWORD: password
-            MYSQL_DATABASE: app
+            MYSQL_DATABASE: fridge
             MYSQL_USER: user
             MYSQL_PASSWORD: password
         ports:
-            - "3307:3306"
-    app:
+            - "3306:3306"
+    rails:
         build: .
-        command: bundle exec rails s -p 3000 -b '0.0.0.0'
-        volumes:
-            - ".:/app"
         ports:
-            - "3001:3000"
+            - '3000:3000'
+        volumes:
+            - .:/docker/app # add our local code to dockerfile
         depends_on:
             - db
         links:
             - db
-         environment:
+        environment:
             DB_USER: root
-            DB_NAME: app
+            DB_NAME: fridge
             DB_PASSWORD: password
             DB_HOST: db
